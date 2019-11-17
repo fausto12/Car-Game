@@ -1,4 +1,6 @@
 import pygame
+import time
+
 pygame.init()
 gray = (119, 118, 110)
 display_h = 600
@@ -13,6 +15,25 @@ yellow_strip = pygame.image.load('yellow_strip.png')
 white_strip = pygame.image.load('white_strip.png')
 # width of the car
 car_width = 128
+
+
+def text_objects(text, font):
+    textsurface = font.render(text, True, (0, 98, 255))
+    return textsurface, textsurface.get_rect()
+
+
+def message_display(text):
+    largetext = pygame.font.Font("freesansbold.ttf", 80)
+    textsurf, textrect = text_objects(text, largetext)
+    textrect.center = ((display_w/2), (display_h/2))
+    gamedisplay.blit(textsurf, textrect)
+    pygame.display.update()
+    time.sleep(3)
+    game_loop()
+
+
+def crash():
+    message_display("YOU CRASHED")
 
 
 def background():
@@ -66,7 +87,7 @@ def game_loop():
 
         # boundary set up
         if(x > 833 - car_width or x < 227):
-            bumped = True
+            crash()
         pygame.display.update()
 
         clock.tick(60)
